@@ -1,0 +1,103 @@
+{
+  "name": "aws-localstack-devcontainer",
+  "dockerComposeFile": "compose.yaml",
+  "service": "workspace",
+  "workspaceFolder": "/workspaces/aws-localstack-devcontainer",
+  "postCreateCommand": ".devcontainer/postCreateCommand.sh",
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/shfmt:1": {},
+    "ghcr.io/devcontainers-extra/features/lefthook-asdf:1": {},
+    "ghcr.io/devcontainers/features/aws-cli:1": {},
+    "ghcr.io/devcontainers/features/common-utils:2": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+    "ghcr.io/devcontainers/features/terraform:1": {
+      "installTerraformDocs": true,
+      "version": "1.11.1",
+      "tflint": "latest"
+    },
+    "ghcr.io/dhoeric/features/hadolint:1": {},
+    "ghcr.io/dhoeric/features/trivy:1": {},
+    "ghcr.io/localstack/devcontainer-feature/localstack-cli:0": {
+      "awslocal": true,
+      "tflocal": true
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // Docker
+        "exiasr.hadolint",
+        // JavaScript & TypeScript
+        "esbenp.prettier-vscode",
+        "yoavbls.pretty-ts-errors",
+        // Shell
+        "foxundermoon.shell-format",
+        "timonwong.shellcheck",
+        // Terraform
+        "HashiCorp.terraform",
+        "-ms-vscode.azure-account",
+        // Utility
+        "dotenv.dotenv-vscode",
+        "eamodio.gitlens",
+        "github.copilot",
+        "gruntfuggly.todo-tree",
+        "streetsidesoftware.code-spell-checker"
+      ],
+      "settings": {
+        // Shell
+        "shellformat.flag": "-s",
+        "shellformat.path": "/usr/local/bin/shfmt",
+        // Terraform
+        "aws.telemetry": false,
+        "terraform.experimentalFeatures.prefillRequiredFields": true,
+        "terraform.experimentalFeatures.validateOnSave": true,
+        "terraform.codelens.referenceCount": true,
+        "[terraform]": {
+          "editor.defaultFormatter": "hashicorp.terraform",
+          "editor.formatOnSave": true,
+          "editor.formatOnSaveMode": "file"
+        },
+        "[terraform-vars]": {
+          "editor.defaultFormatter": "hashicorp.terraform",
+          "editor.formatOnSave": true,
+          "editor.formatOnSaveMode": "file"
+        },
+        // Terminal
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.scrollback": 100000,
+        // Spell Checker
+        "cSpell.words": [
+          "awslocal",
+          "devcontainers",
+          "dhoeric",
+          "eamodio",
+          "esbenp",
+          "exiasr",
+          "foxundermoon",
+          "gruntfuggly",
+          "hadolint",
+          "noninteractive",
+          "pinentry",
+          "lefthook",
+          "localstack",
+          "scrollback",
+          "shellcheck",
+          "shellformat",
+          "shfmt",
+          "tflint",
+          "tflocal",
+          "timonwong",
+          "yoavbls"
+        ],
+        // Other
+        "files.associations": {
+          "Dockerfile*": "dockerfile"
+        },
+        "[json][yaml][markdown]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.formatOnSave": true
+        }
+      }
+    }
+  }
+}

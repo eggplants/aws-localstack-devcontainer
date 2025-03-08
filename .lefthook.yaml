@@ -1,0 +1,10 @@
+pre-commit:
+  commands:
+    tf-fmt:
+      run: terraform fmt -recursive
+    tf-validate:
+      run: terraform validate
+    tflint:
+      run: tflint --recursive --fix
+    trivy-scan:
+      run: trivy fs --scanners secret --exit-code 1 ./
