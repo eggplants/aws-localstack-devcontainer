@@ -1,0 +1,94 @@
+name: terraform-plan
+
+on:
+  pull_request:
+    paths:
+      - "env/**"
+
+jobs:
+  check_changed_dirs:
+    runs-on: ubuntu-20.04
+    outputs:
+      changes: ${{ steps.pr_dir_changes.outputs.changes }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - id: pr_dir_changes
+        run: |
+          echo "changes='[$(
+            git diff origin/"${GITHUB_BASE_REF}" --dirstat=files,0 |
+            awk '$0=$2' |
+            sed 's/\/*$//' |
+            grep 'environments' |
+            sed 's/^.*$/"&"/' |
+            paste -sd, -
+          )]'" >> "$GITHUB_OUTPUT"
+  plan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: "write"
+      id-token: "write"
+      pull-requests: "write"
+    timeout-minutes: 20
+    needs: "check_changed_dirs"
+    strategy:
+      matrix:
+        dir: ${{ fromJSON(needs.check_changed_dirs.outputs.changes) }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ matrix.dir }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - uses: shmokmt/actions-setup-tfcmt@v2
+
+      # - uses: LocalStack/setup-localstack@v0.2.3
+      #   with:
+      #     state-action: "load"
+      #     state-backend: "cloud-pods"
+      #     state-name: "my-cloud-pod"
+      #   env:
+      #     LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
+
+      - uses: localstack/setup-localstack@v0.2.4
+        with:
+          state-action: "start"
+          image-tag: "latest"
+          install-awslocal: "true"
+          install-tflocal: "true"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: "dummy"
+          aws-secret-access-key: "dummy"
+          aws-region: "ap-northeast-1"
+
+      - run: terraform fmt -check
+      - run: terraform init
+      - run: terraform validate -no-color
+      - id: plan
+        if: github.event_name == 'pull_request'
+        run: tfcmt plan -patch -- terraform plan -no-color -input=false -lock=false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - if: steps.plan.outcome == 'failure'
+        run: exit 1
+
+      # - name: Terraform Apply
+      #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: tfcmt apply -- terraform apply -auto-approve -input=false
+
+      # - uses: LocalStack/setup-localstack@v0.2.3
+      #   with:
+      #     state-action: "save"
+      #     install-awslocal: "true"
+      #     state-backend: "cloud-pods"
+      #     state-name: "my-cloud-pod"
+      #   env:
+      #     LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
