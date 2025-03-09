@@ -1,5 +1,16 @@
 terraform {
   required_version = "~> 1.11.0"
+
+  backend "s3" {
+    bucket       = "tf-s3-state-lock-example-tfstate"
+    key          = "terraform.tfstate"
+    use_lockfile = true
+
+    endpoints = {
+      s3 = "http://s3.localhost.localstack.cloud:4566"
+    }
+  }
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -12,7 +23,6 @@ terraform {
       skip_requesting_account_id  = true
 
       endpoints = {
-        s3  = "http://s3.localhost.localstack.cloud:4566"
         ec2 = "http://localhost:4566"
         # apigateway     = "http://localhost:4566"
         # apigatewayv2   = "http://localhost:4566"
