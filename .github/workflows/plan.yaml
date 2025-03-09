@@ -11,7 +11,7 @@ jobs:
     outputs:
       changes: ${{ steps.pr_dir_changes.outputs.changes }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - id: pr_dir_changes
