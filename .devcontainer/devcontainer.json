@@ -4,6 +4,7 @@
   "service": "workspace",
   "workspaceFolder": "/workspaces/aws-localstack-devcontainer",
   "postCreateCommand": ".devcontainer/postCreateCommand.sh",
+  "postAttachCommand": ".devcontainer/postAttachCommand.sh '${localEnv:XDG_SESSION_DESKTOP}'",
   "features": {
     "ghcr.io/devcontainers-contrib/features/shfmt:1": {},
     "ghcr.io/devcontainers-extra/features/lefthook-asdf:1": {},
@@ -36,14 +37,13 @@
         // Terraform
         "HashiCorp.terraform",
         "-ms-vscode.azure-account",
+        "-AmazonWebServices.aws-toolkit-vscode",
         // Utility
         "dotenv.dotenv-vscode",
         "eamodio.gitlens",
-        "github.copilot",
+        "GitHub.copilot",
         "gruntfuggly.todo-tree",
-        "streetsidesoftware.code-spell-checker",
-        "-ms-vscode.azure-account",
-        "-amazonwebservices.aws-toolkit-vscode"
+        "streetsidesoftware.code-spell-checker"
       ],
       "settings": {
         // Shell
