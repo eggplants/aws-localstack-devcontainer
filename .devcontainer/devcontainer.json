@@ -67,6 +67,7 @@
         "terminal.integrated.scrollback": 100000,
         // Spell Checker
         "cSpell.words": [
+          "apigatewayv2",
           "awslocal",
           "devcontainers",
           "dhoeric",
@@ -84,6 +85,7 @@
           "shellcheck",
           "shellformat",
           "shfmt",
+          "stepfunctions",
           "tflint",
           "tflocal",
           "timonwong",
