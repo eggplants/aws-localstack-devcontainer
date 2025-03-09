@@ -41,7 +41,9 @@
         "eamodio.gitlens",
         "github.copilot",
         "gruntfuggly.todo-tree",
-        "streetsidesoftware.code-spell-checker"
+        "streetsidesoftware.code-spell-checker",
+        "-ms-vscode.azure-account",
+        "-amazonwebservices.aws-toolkit-vscode"
       ],
       "settings": {
         // Shell
@@ -68,6 +70,7 @@
         // Spell Checker
         "cSpell.words": [
           "apigatewayv2",
+          "amazonwebservices",
           "awslocal",
           "devcontainers",
           "dhoeric",
