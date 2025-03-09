@@ -29,6 +29,7 @@ terraform {
         # cloudformation = "http://localhost:4566"====
         # cloudwatch     = "http://localhost:4566"
         # dynamodb       = "http://localhost:4566"
+        # ec2            = "http://localhost:4566"
         # es             = "http://localhost:4566"
         # elasticache    = "http://localhost:4566"
         # firehose       = "http://localhost:4566"
