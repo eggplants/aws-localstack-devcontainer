@@ -11,7 +11,7 @@ jobs:
     outputs:
       changes: ${{ steps.pr_dir_changes.outputs.changes }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - id: pr_dir_changes
@@ -40,7 +40,7 @@ jobs:
         shell: bash
         working-directory: ${{ matrix.dir }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: hashicorp/setup-terraform@v3
       - uses: shmokmt/actions-setup-tfcmt@v2
 
