@@ -52,7 +52,7 @@ jobs:
       #   env:
       #     LOCALSTACK_API_KEY: ${{ secrets.LOCALSTACK_API_KEY }}
 
-      - uses: localstack/setup-localstack@v0.2.4
+      - uses: localstack/setup-localstack@v0.2.5
         with:
           state-action: "start"
           image-tag: "latest"
