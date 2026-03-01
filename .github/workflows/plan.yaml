@@ -60,7 +60,7 @@ jobs:
           install-tflocal: "true"
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: aws-actions/configure-aws-credentials@v5
+      - uses: aws-actions/configure-aws-credentials@v6
         with:
           aws-access-key-id: "dummy"
           aws-secret-access-key: "dummy"
